@@ -5,9 +5,84 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#navbar a div:first-of-type{
+  transition: 0.5s ease;
+}
+
+#navbar .active div:first-of-type{
+  background-color:#c5cae9 !important;
+}
+
+
+
+.fade-enter, .fade-exit{
+  opacity:0;
+  transition: opacity 300ms ease-in;
+}
+
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+}
+
+
+
+.slide-right-enter,
+.slide-right-exit{
+  overflow: hidden;
+
+}
+
+.slide-left-exit-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-4em, 0);
+    transition-duration: 400ms;
+  transition-property: height, opacity, transform;
+}
+
+.slide-left-enter,
+.slide-right-exit-active {
+  opacity: 0;
+  transform: translate(4em, 0);
+    transition-duration: 200ms;
+  transition-property: height, opacity, transform;
+    position: absolute;
+}
+
+.slide-right-enter-active,.slide-left-enter-active{
+  opacity: 0.8;
+  transform: translate(0, 0);
+}
+
+
+
+.slide-top-enter-active,
+.slide-top-exit-active,
+.slide-down-enter-active,
+.slide-down-exit-active {
+  transition-duration: 0.4s;
+  transition-property: height, opacity, transform;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+  overflow: hidden;
+}
+
+.slide-top-enter,
+.slide-down-exit-active {
+  opacity: 0;
+  transform: translate(0, 8em);
+}
+
+.slide-top-exit-active,
+.slide-down-enter {
+  opacity: 0;
+  transform: translate(0, -8em);
 }
