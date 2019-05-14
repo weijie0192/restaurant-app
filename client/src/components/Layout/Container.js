@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -15,10 +16,10 @@ class Container extends Component {
           [classes.contentShift]: navOpen
         })}
       >
+        <CssBaseline />
         <div className={classes.routerview}>
           <Route render={props => <RouterView location={props.location} />} />
         </div>
-        <Grid item xs={12} />
       </Grid>
     );
   }

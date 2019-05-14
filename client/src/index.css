@@ -21,6 +21,14 @@ code {
   background-color:#c5cae9 !important;
 }
 
+svg{
+  vertical-align: middle;
+}
+.container{
+  width:100%;
+  position:absolute;
+  padding: 4px 10px 10px 10px;
+}
 
 
 .fade-enter, .fade-exit{

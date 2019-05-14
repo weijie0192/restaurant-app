@@ -63,7 +63,6 @@ class MiniDrawer extends React.Component {
       >
         <ListItem button>
           <ListItemIcon>{item.icon}</ListItemIcon>
-
           <ListItemText primary={item.text} />
         </ListItem>
       </NavLink>
@@ -97,23 +96,24 @@ class MiniDrawer extends React.Component {
 }
 
 const drawerWidth = 240;
-const styles = theme => ({
-  drawer: {
-    width: 0,
-    flexShrink: 0
-  },
+const styles = theme =>
+  console.log(theme) || {
+    drawer: {
+      width: 0,
+      flexShrink: 0
+    },
 
-  drawerPaper: {
-    width: drawerWidth
-  },
+    drawerPaper: {
+      width: drawerWidth
+    },
 
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end'
-  }
-});
+    drawerHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 8px',
+      ...theme.mixins.toolbar,
+      justifyContent: 'flex-end'
+    }
+  };
 
 export default withStyles(styles, { withTheme: true })(MiniDrawer);

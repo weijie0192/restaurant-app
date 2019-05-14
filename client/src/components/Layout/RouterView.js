@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Dashboard from '../Views/Dashboard';
 import Home from '../Views/Home';
-import TodoList from '../Views/TodoList';
+import TodoList from '../TodoList/TodoList';
 import TrafficControl from '../Views/TrafficControl';
 import ManageMenu from '../Views/ManageMenu';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
