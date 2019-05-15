@@ -8,26 +8,30 @@ import EditIcon from '@material-ui/icons/Edit';
 import Checkbox from '@material-ui/core/Checkbox';
 
 export default ({ classes, itemList, checkboxEvent }) => (
-  <List className={classes.itemList}>
-    {itemList.map(item => (
-      <ListItem className={classes.listItemHover} key={item.id}>
-        <Checkbox
-          checked={item.isChecked}
-          onChange={(e, isChecked) => checkboxEvent(item, isChecked)}
-          color="default"
-          classes={{
-            root: classes.itemCheckBox,
-            checked: classes.checked
-          }}
-        />
-        <ListItemText primary={item.content} />
-        <IconButton size="small">
-          <EditIcon />
-        </IconButton>
-        <IconButton color="secondary">
-          <DeleteIcon />
-        </IconButton>
-      </ListItem>
-    ))}
-  </List>
+  <React.Fragment>
+    {itemList ? (
+      <List className={classes.itemList}>
+        {itemList.map(item => (
+          <ListItem className={classes.listItemHover} key={item.id}>
+            <Checkbox
+              checked={item.isChecked}
+              onChange={(e, isChecked) => checkboxEvent(item, isChecked)}
+              color="default"
+              classes={{
+                root: classes.itemCheckBox,
+                checked: classes.checked
+              }}
+            />
+            <ListItemText primary={item.content} />
+            <IconButton size="small">
+              <EditIcon />
+            </IconButton>
+            <IconButton color="secondary">
+              <DeleteIcon />
+            </IconButton>
+          </ListItem>
+        ))}
+      </List>
+    ) : null}
+  </React.Fragment>
 );

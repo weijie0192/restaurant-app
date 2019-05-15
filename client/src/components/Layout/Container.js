@@ -36,7 +36,10 @@ const styles = theme => ({
       padding: '10px'
     },
     [theme.breakpoints.up('md')]: {
-      padding: '10px 20px 20px 20px'
+      padding: '10 20px'
+    },
+    [theme.breakpoints.up('lg')]: {
+      padding: '10px 200px'
     },
     transition: theme.transitions.create(['padding', ' margin'], {
       easing: theme.transitions.easing.sharp,

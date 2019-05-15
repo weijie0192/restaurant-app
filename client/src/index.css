@@ -43,30 +43,22 @@ svg{
 
 
 
-.slide-right-enter,
-.slide-right-exit{
-  overflow: hidden;
-
-}
-
-.slide-left-exit-active,
-.slide-right-enter {
+.page-enter {
   opacity: 0;
-  transform: translate(-4em, 0);
-    transition-duration: 400ms;
+  transform: translate(-2em, 0);
+    transition-duration: 200ms;
   transition-property: height, opacity, transform;
 }
 
-.slide-left-enter,
-.slide-right-exit-active {
+.page-exit-active {
   opacity: 0;
-  transform: translate(4em, 0);
+  transform: translate(2em, 0);
     transition-duration: 200ms;
   transition-property: height, opacity, transform;
     position: absolute;
 }
 
-.slide-right-enter-active,.slide-left-enter-active{
+.page-enter-active{
   opacity: 0.8;
   transform: translate(0, 0);
 }

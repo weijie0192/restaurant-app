@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-
+import Paper from '@material-ui/core/Paper';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 class ManageMenu extends Component {
   render() {
-    // const { classes } = this.props;
+    //  const { classes } = this.props;
     return (
       <div className="container">
-        <h1 variant="h5" component="h3">
-          This is TManage menu
-        </h1>
+        <CssBaseline />
+        <Typography variant="display2" gutterBottom>
+          This is Menu Management Page
+        </Typography>
+        <Paper style={{ height: 500 }} />
       </div>
     );
   }

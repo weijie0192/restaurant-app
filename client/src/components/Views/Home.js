@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import Paper from '@material-ui/core/Paper';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 class Home extends Component {
@@ -7,9 +9,11 @@ class Home extends Component {
     //  const { classes } = this.props;
     return (
       <div className="container">
-        <h1 variant="h5" component="h3">
+        <CssBaseline />
+        <Typography variant="display2" gutterBottom>
           This is home page
-        </h1>
+        </Typography>
+        <Paper style={{ height: 500 }} />
       </div>
     );
   }

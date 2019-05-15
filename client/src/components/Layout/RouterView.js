@@ -19,11 +19,7 @@ class RouterView extends Component {
     const { location } = this.props;
     return (
       <TransitionGroup>
-        <CSSTransition
-          key={location.key}
-          classNames="slide-right"
-          timeout={300}
-        >
+        <CSSTransition key={location.key} classNames="page" timeout={200}>
           <Switch location={location}>
             <Route exact path="/" component={Home} />
             <Route exact path="/dashboard" component={Dashboard} />
