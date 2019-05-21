@@ -21,6 +21,9 @@ code {
   background-color:#c5cae9 !important;
 }
 
+.dx-cell-focus-disabled {
+    text-align: center!important
+}
 svg{
   vertical-align: middle;
 }
