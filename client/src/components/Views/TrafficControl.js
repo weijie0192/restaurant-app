@@ -3,7 +3,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import Export from '@material-ui/icons/GetApp';
+import VisbilityIcon from '@material-ui/icons/Visibility';
 import { withStyles } from '@material-ui/core/styles';
 import {
   RowDetailState,
@@ -21,7 +24,6 @@ import {
   TableRowDetail,
   PagingPanel,
   ColumnChooser,
-  TableColumnResizing,
   TableColumnVisibility,
   Toolbar,
   SearchPanel
@@ -94,25 +96,31 @@ class TrafficControl extends Component {
       <Button color="secondary" variant="outlined">
         Void
       </Button>
-      <br></br>
+      <br />
     </div>
   );
 
   render() {
     // const { classes } = this.props;
-    const {
-      rows,
-      columns,
-      pageSizes,
-      defaultColumnWidths,
-      tableColumnExtensions
-    } = this.state;
+    const { rows, columns, pageSizes, tableColumnExtensions } = this.state;
 
     return (
       <div className="container">
         <Typography variant="h5" align="center" gutterBottom>
           All Timeouts
         </Typography>
+        <IconButton
+          variant="outlined"
+          style={{
+            color: 'green',
+            position: 'absolute',
+            left: 80,
+            top: 53,
+            zIndex: '1000'
+          }}
+        >
+          <Export />
+        </IconButton>
         <CssBaseline />
         <Paper>
           <Grid rows={rows} columns={columns}>
@@ -132,12 +140,19 @@ class TrafficControl extends Component {
             <TableHeaderRow showSortingControls />
             <TableColumnVisibility />
             <Toolbar />
-
-            <SearchPanel
-              style={{ position: 'absolute' }}
-              className="heywdadhwaiu"
+            <ColumnChooser
+              toggleButtonComponent={props => (
+                <IconButton
+                  onClick={props.onToggle}
+                  buttonRef={props.buttonRef}
+                  style={{ position: 'absolute' }}
+                >
+                  <VisbilityIcon />
+                </IconButton>
+              )}
             />
-            <ColumnChooser />
+
+            <SearchPanel />
             <TableRowDetail contentComponent={this.RowDetail} />
             <PagingPanel pageSizes={pageSizes} />
           </Grid>
@@ -153,7 +168,7 @@ const styles = theme => ({
       backgroundColor: theme.palette.action.hover
     },
     '& th': {
-      fontSize: 20,
+      fontSize: 18,
       textAlign: 'center'
     },
     '& td:nth-of-type(n+3)': {
