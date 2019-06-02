@@ -14,7 +14,7 @@
     }
   ],
   "start_url": "/~weiZ/react-pwa/",
-  "display": "fullscreen",
-  "theme_color": "rgba(0, 0, 0, 0.54)",
-  "background_color": "rgba(0, 0, 0, 0.54)"
+  "display": "standalone",
+  "theme_color": "#fafafa",
+  "background_color": "#fafafa"
 }
