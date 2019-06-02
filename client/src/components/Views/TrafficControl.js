@@ -19,6 +19,7 @@ import {
 } from '@devexpress/dx-react-grid';
 import {
   Grid,
+  VirtualTable,
   Table,
   TableHeaderRow,
   TableRowDetail,
@@ -44,30 +45,7 @@ class TrafficControl extends Component {
         { name: 'city1', title: 'City1' },
         { name: 'car1', title: 'Car1' }
       ],
-      rows: [
-        {
-          name: 'hsdn adhw ouhdiuwa hdua hiduh aiudh waiuey',
-          sex: 'wow',
-          id: 1
-        },
-        { name: 'hey', sex: 'wow' },
-        { name: 'hey', car: 'wow' },
-        { name: 'hey', city: 'wow' },
-        { name: 'hey', sex: 'wow' },
-        { name: 'hey', car: 'wow' },
-        { name: 'hey', sex: 'wow' },
-        { name: 'hey', sex: 'wow' },
-        { name: 'hey', car: 'wow' },
-        { name: 'hey', city: 'wow' },
-        { name: 'hey', sex: 'wow' },
-        { name: 'hey', car: 'wow' },
-        { name: 'hey', sex: 'wow' },
-        { name: 'hey', sex: 'wow' },
-        { name: 'hey', car: 'wow' },
-        { name: 'hey', city: 'wow' },
-        { name: 'hey', sex: 'wow' },
-        { name: 'hey', car: 'wow' }
-      ],
+      rows: this.getRows(),
       pageSizes: [5, 10, 15, 0],
       tableColumnExtensions: [
         { columnName: 'name', width: 180, wordWrapEnabled: true },
@@ -80,6 +58,23 @@ class TrafficControl extends Component {
         { columnName: 'car1', width: 240, wordWrapEnabled: true }
       ]
     };
+  }
+
+  getRows() {
+    const arr = [];
+    for (var i = 0; i < 1000; i++) {
+      arr.push({
+        name: 'hawdopawkdpa',
+        sex: 'hawdopawkdpa',
+        city: 'hawdopawkdpa',
+        car: 'hawdopawkdpa',
+        name1: 'hawdopawkdpa',
+        sex1: 'hawdopawkdpa',
+        city1: 'hawdopawkdpa',
+        car1: 'hawdopawkdpa'
+      });
+    }
+    return arr;
   }
 
   RowDetail = ({ row }) => (
@@ -107,7 +102,7 @@ class TrafficControl extends Component {
     return (
       <div className="container">
         <Typography variant="h5" align="center" gutterBottom>
-          All Timeouts
+          Traffic Table
         </Typography>
         <IconButton
           variant="outlined"
@@ -133,7 +128,7 @@ class TrafficControl extends Component {
             <RowDetailState />
             <PagingState defaultCurrentPage={0} defaultPageSize={10} />
             <IntegratedPaging />
-            <Table
+            <VirtualTable
               columnExtensions={tableColumnExtensions}
               tableComponent={TableComponent}
             />

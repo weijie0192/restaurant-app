@@ -1,8 +1,10 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "homepage": "/~weiZ/react-pwa/",
   "private": true,
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "@devexpress/dx-react-core": "^1.11.0",
     "@devexpress/dx-react-grid": "^1.11.0",
     "@devexpress/dx-react-grid-material-ui": "^1.11.0",
