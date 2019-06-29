@@ -47,6 +47,11 @@ class MiniDrawer extends React.Component {
       text: 'Todo List',
       icon: <TodoIcon />,
       link: '/todo'
+    },
+    {
+      text: 'Custom Table',
+      icon: <TodoIcon />,
+      link: '/table'
     }
   ];
 

@@ -6,6 +6,7 @@ import TodoList from '../TodoList/TodoList';
 import TrafficControl from '../Views/TrafficControl';
 import ManageMenu from '../Views/ManageMenu';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import MyTable from '../Views/CustomTable';
 
 class RouterView extends Component {
   shouldComponentUpdate({ location }) {
@@ -26,6 +27,7 @@ class RouterView extends Component {
             <Route exact path="/todo" component={TodoList} />
             <Route exact path="/manage" component={ManageMenu} />
             <Route exact path="/track" component={TrafficControl} />
+            <Route exact path="/table" component={MyTable} />
             <Route exact path="*" component={Home} />
           </Switch>
         </CSSTransition>
