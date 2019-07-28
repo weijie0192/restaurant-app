@@ -1,20 +1,26 @@
 import React, { PureComponent } from 'react';
-import {
-  Grid,
-  Paper,
-  TextField,
-  Button,
-  Divider,
-  Typography
-} from '@material-ui/core';
+import { Grid, Paper, TextField, Button, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import AutoTextField from './Custom/AutoTextField';
+import MUIDataTable from 'mui-datatables';
+import CreateRosterInput from './Custom/CreateRosterInput';
+
+const data = [
+  { name: 'Joe James', company: 'a' },
+  { name: 'John Walsh', company: 'b' },
+  { name: 'Bob Herm', company: 'c' },
+  { name: 'James Houston', company: 'd' },
+  { name: 'Joe James2', company: 'e' },
+  { name: 'John Walsh3', company: 'aa' }
+];
+const options = {
+  filterType: 'checkbox'
+};
 
 class Test extends PureComponent {
   state = {
     inputData: {},
     UserNameInput: '',
-    loading: false,
     options: [
       {
         label: 'one',
@@ -35,32 +41,42 @@ class Test extends PureComponent {
     ]
   };
 
-  onChangeInputData = (value, pointer) => {
+  onChangeInputData = key => value => {
     this.setState(state => ({
-      inputData: { ...state.inputData, [pointer]: value }
+      inputData: { ...state.inputData, [key]: value }
     }));
+    console.log('-----');
   };
 
-  onChangeUserName = value => {
+  onChangeUserName = (e, { newValue }) => {
     this.setState({
-      UserNameInput: value,
-      loading: true
+      UserNameInput: newValue
     });
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-        options: [
-          { label: 'w' + Math.random() },
-          { label: 'w' + Math.random() },
-          { label: 'w' + Math.random() },
-          { label: 'w' + Math.random() }
-        ]
-      });
-    }, 400);
   };
 
   serverSideSearch = value => Promise.resolve(value);
 
+  columns = [
+    {
+      name: 'name',
+      label: 'Name',
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value, tableMeta) => (
+          <CreateRosterInput index={tableMeta} />
+        )
+      }
+    },
+    {
+      name: 'company',
+      label: 'Company',
+      options: {
+        filter: true,
+        sort: true
+      }
+    }
+  ];
   render() {
     const { classes } = this.props;
     return (
@@ -104,18 +120,19 @@ class Test extends PureComponent {
               <TextField label="Roster" fullWidth margin="normal" />
               <br />
               <br />
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  console.log(this.state);
-                }}
-              >
+              <Button color="primary" variant="contained" onClick={() => {}}>
                 Create
               </Button>
             </Grid>
           </Grid>
         </Paper>
+        <MUIDataTable
+          data={this.state.inputData}
+          title={'Employee List'}
+          data={data}
+          columns={this.columns}
+          options={options}
+        />
       </div>
     );
   }

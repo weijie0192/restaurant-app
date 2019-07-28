@@ -7,10 +7,10 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Popper from '@material-ui/core/Popper';
-import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { withStyles, makeStyles } from '@material-ui/styles';
 
 function renderInputComponent(inputProps) {
   const {
@@ -19,6 +19,7 @@ function renderInputComponent(inputProps) {
     ref,
     loading,
     select,
+    error,
     ...other
   } = inputProps;
 
@@ -36,19 +37,29 @@ function renderInputComponent(inputProps) {
         endAdornment: select && (
           <InputAdornment>
             {loading ? (
-              <CircularProgress size={30} />
+              <CircularProgress size={24} />
             ) : (
               <SearchIcon color="action" />
             )}
           </InputAdornment>
         )
       }}
+      error={error}
+      helperText={error}
       {...other}
     />
   );
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
+  if (suggestion === 'empty') {
+    return (
+      <MenuItem disabled component="div">
+        <div>No Result....</div>
+      </MenuItem>
+    );
+  }
+
   const matches = match(suggestion.label, query);
   const parts = parse(suggestion.label, matches);
   return (
@@ -91,7 +102,7 @@ function getSuggestionValue(suggestion) {
   return suggestion.label;
 }
 
-const useStyles = makeStyles(theme => ({
+const style = () => ({
   root: {
     height: 250,
     flexGrow: 1
@@ -101,8 +112,8 @@ const useStyles = makeStyles(theme => ({
   },
   suggestionsContainerOpen: {
     position: 'absolute',
-    zIndex: 1,
-    marginTop: theme.spacing(1),
+    zIndex: 1000,
+    marginTop: 1,
     left: 0,
     right: 0
   },
@@ -115,94 +126,116 @@ const useStyles = makeStyles(theme => ({
     listStyleType: 'none'
   },
   divider: {
-    height: theme.spacing(2)
+    height: 1
   }
-}));
+});
 
-export default function IntegrationAutosuggest({
-  options,
-  onChange,
-  onBlur,
-  value,
-  pointer,
-  select,
-  serverSide,
-  ...other
-}) {
-  const classes = useStyles();
-  const [stateSuggestions, setSuggestions] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
+function renderSuggestionsContainer(options) {
+  return (
+    <Paper {...options.containerProps} square>
+      {options.children}
+    </Paper>
+  );
+}
 
-  const handleSuggestionsFetchRequested = ({ value }) => {
-    console.log('wow');
+let time = 0;
+let searchTimeout;
+class IntegrationAutosuggest extends React.PureComponent {
+  state = {
+    stateSuggestions: [],
+    loading: false
+  };
+
+  handleSuggestionsFetchRequested = ({ value }) => {
+    const { serverSide, options } = this.props;
     if (serverSide) {
-      setLoading(true);
-      serverSide(value)
-        .then(({ data }) => {
-          setSuggestions(
-            data || [
-              { label: value + Math.random() },
-              { label: value + Math.random() },
-              { label: value + Math.random() },
-              { label: value + Math.random() }
-            ]
-          );
-        })
-        .catch()
-        .finally(e => {
-          setLoading(false);
-        });
+      this.setState({ loading: true });
+      if (searchTimeout) {
+        clearTimeout(searchTimeout);
+        searchTimeout = null;
+      }
+
+      searchTimeout = setTimeout(() => {
+        serverSide(value)
+          .then(({ data }) => {
+            this.setState({
+              stateSuggestions: data || ['empty'],
+              loading: false
+            });
+          })
+          .catch(e => {
+            this.setState({ loading: false });
+          });
+      }, 300);
     } else {
-      setSuggestions(getSuggestions(value, options || []));
+      this.setState({
+        stateSuggestions: getSuggestions(value, options) || []
+      });
     }
   };
 
-  const handleSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
+  // do nothing
+  handleSuggestionsClearRequested = () => {};
 
-  const handleChange = (event, { newValue }) => {
-    if (onChange) {
-      onChange(newValue, pointer);
+  onSuggestionSelected = () => {
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+      searchTimeout = null;
     }
   };
 
-  const handleBlur = () => {
-    if (select) {
-      if (options.findIndex(item => item.label === value) === -1) {
-        onChange('', pointer);
+  handleBlur = () => {
+    if (this.props.select) {
+      if (
+        this.state.stateSuggestions.findIndex(
+          item => item.label === this.props.value
+        ) === -1
+      ) {
+        this.props.onChange(false, { newValue: '' });
       }
     }
   };
+  render() {
+    const {
+      options,
+      onChange,
+      onBlur,
+      value,
+      select,
+      serverSide,
+      classes,
+      ...other
+    } = this.props;
 
-  return (
-    <Autosuggest
-      renderInputComponent={renderInputComponent}
-      suggestions={stateSuggestions}
-      onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
-      onSuggestionsClearRequested={handleSuggestionsClearRequested}
-      getSuggestionValue={getSuggestionValue}
-      renderSuggestion={renderSuggestion}
-      inputProps={{
-        onBlur: handleBlur,
-        classes,
-        value: value || '',
-        onChange: handleChange,
-        select,
-        loading,
-        ...other
-      }}
-      theme={{
-        container: classes.container,
-        suggestionsContainerOpen: classes.suggestionsContainerOpen,
-        suggestionsList: classes.suggestionsList,
-        suggestion: classes.suggestion
-      }}
-      renderSuggestionsContainer={options => (
-        <Paper {...options.containerProps} square>
-          {options.children}
-        </Paper>
-      )}
-    />
-  );
+    return (
+      <Autosuggest
+        renderInputComponent={renderInputComponent}
+        suggestions={this.state.stateSuggestions}
+        onSuggestionSelected={this.onSuggestionSelected}
+        onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={{
+          onBlur: this.handleBlur,
+          classes,
+          value: value || '',
+          onChange: onChange,
+          select,
+          loading: this.state.loading,
+
+          ...other
+        }}
+        theme={{
+          container: classes.container,
+          suggestionsContainerOpen: classes.suggestionsContainerOpen,
+          suggestionsList: classes.suggestionsList,
+          suggestion: classes.suggestion
+        }}
+        renderSuggestionsContainer={renderSuggestionsContainer}
+      />
+    );
+  }
 }
+
+export default withStyles(style)(IntegrationAutosuggest);
