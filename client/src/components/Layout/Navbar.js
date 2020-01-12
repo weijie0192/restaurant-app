@@ -26,6 +26,12 @@ class MiniDrawer extends React.Component {
       icon: <DashboardIcon />,
       divide: true,
       link: '/dashboard'
+    },
+    {
+      text: 'Tree',
+      icon: <DashboardIcon />,
+      divide: true,
+      link: '/Tree'
     }
   ];
 

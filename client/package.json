@@ -13,6 +13,7 @@
     "autosuggest-highlight": "^3.1.1",
     "fastclick": "^1.0.6",
     "mui-datatables": "^2.6.4",
+    "normalizr": "^3.4.1",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
     "react-dom": "^16.8.6",

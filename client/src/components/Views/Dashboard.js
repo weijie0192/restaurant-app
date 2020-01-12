@@ -81,13 +81,18 @@ class Test extends PureComponent {
     const { classes } = this.props;
     return (
       <div>
-        <Typography variant="h6" color="textSecondary">
+        <Typography
+          variant="h6"
+          color="textSecondary"
+          track-click="Create Member Label"
+        >
           Create New Member
         </Typography>
         <Paper>
           <Grid container>
             <Grid item md={4} className={classes.GridItem}>
               <AutoTextField
+                track-click="UserName"
                 options={this.state.options}
                 label="User Name"
                 variant="outlined"
@@ -101,6 +106,7 @@ class Test extends PureComponent {
             </Grid>
             <Grid item md={4} className={classes.GridItem}>
               <TextField
+                track-click="Facilitu"
                 label="Facility"
                 variant="outlined"
                 fullWidth
@@ -120,7 +126,12 @@ class Test extends PureComponent {
               <TextField label="Roster" fullWidth margin="normal" />
               <br />
               <br />
-              <Button color="primary" variant="contained" onClick={() => {}}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => {}}
+                track-click="Create"
+              >
                 Create
               </Button>
             </Grid>

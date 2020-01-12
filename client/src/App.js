@@ -1,5 +1,6 @@
 import React from 'react';
 import Main from './components/Main';
+import at from './activityTracker';
 
 function App() {
   return (

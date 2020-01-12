@@ -21,6 +21,7 @@ class ManageMenu extends Component {
         </Typography>
         <Paper style={{ height: 500 }}>
           <TextField
+            track-click="Input-F"
             InputProps={{
               inputComponent: Flatpickr,
               inputProps: {
